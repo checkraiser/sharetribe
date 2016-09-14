@@ -282,8 +282,6 @@ CREATE TABLE `communities` (
   `cover_photo_processing` tinyint(1) DEFAULT NULL,
   `small_cover_photo_processing` tinyint(1) DEFAULT NULL,
   `favicon_processing` tinyint(1) DEFAULT NULL,
-  `dv_test_file_name` varchar(64) DEFAULT NULL,
-  `dv_test_file` varchar(64) DEFAULT NULL,
   `deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_communities_on_domain` (`domain`) USING BTREE,
@@ -1558,7 +1556,7 @@ CREATE TABLE `transactions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-13 14:37:34
+-- Dump completed on 2016-09-14 10:26:55
 INSERT INTO schema_migrations (version) VALUES ('20080806070738');
 
 INSERT INTO schema_migrations (version) VALUES ('20080807071903');
@@ -3096,4 +3094,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160908091353');
 INSERT INTO schema_migrations (version) VALUES ('20160913110411');
 
 INSERT INTO schema_migrations (version) VALUES ('20160913112734');
+
+INSERT INTO schema_migrations (version) VALUES ('20160914071634');
 
