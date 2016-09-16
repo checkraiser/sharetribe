@@ -1,6 +1,8 @@
 - hosts: all
-  tasks:
-    - shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-    - name: update all packages
-      apt: name=nodejs state=present
+  roles:
+    - role: leonidas.nvm
+      nvm:
+        user: vagrant
+        version: v0.32.0
+        node_version: '6.1.0'
 
