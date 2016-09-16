@@ -57,3 +57,5 @@
     apt: name=libffi-dev state=present
   - name: install gcc
     apt: name=gcc state=present
+  - name: install mysql-dev
+    apt: name=libmysqlclient-dev state=present

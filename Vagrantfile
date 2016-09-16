@@ -12,7 +12,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   #config.vm.box = "yungsang/boot2docker"
   config.vm.box = "ubuntu/trusty64"
-
+  config.ssh.forward_x11 = true
+  config.ssh.insert_key = false
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -25,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -41,18 +42,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder "/Users", "/Users", type: "nfs"
+  #config.vm.synced_folder "/Users", "/Users", type: "nfs"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
   config.vm.provider "virtualbox" do |vb|
     # Don't boot with headless mode
-    vb.gui = true
+    vb.gui = false
 
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+  end
+
+  config.vm.define :sharetribe do |sharetribe|
+    sharetribe.vm.network 'private_network', ip: '192.168.20.50'
+    sharetribe.vm.hostname = "sharetribe-dev"
   end
   #
   # View the documentation for the provider you're using for more
@@ -129,5 +137,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.extra_vars = { ansible_ssh_user: 'vagrant',
                            ansible_connection: 'ssh',
                            ansible_ssh_args: '-o ForwardAgent=yes'}
-  end
+   end
 end
